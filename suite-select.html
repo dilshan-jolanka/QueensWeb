@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Suite Select</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--Default CSS-->
+    <link href="css/default.css" rel="stylesheet" type="text/css">
+    <!--Custom CSS-->
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <!--Plugin CSS-->
+    <link href="css/plugin.css" rel="stylesheet" type="text/css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <!-- Data Cache Manager -->
+    <script src="js/data-cache.js"></script>
+    
+    <style>
+        .suite-card {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .suite-card:hover {
+            border-color: #ff9800;
+            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .suite-header {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .suite-type {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+        
+        .suite-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .suite-details {
+            padding: 25px;
+        }
+        
+        .suite-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .info-item i {
+            color: #ff9800;
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .suite-amenities {
+            margin-top: 20px;
+        }
+        
+        .amenity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .amenity-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #e3f2fd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .amenity-item i {
+            color: #2196f3;
+            margin-right: 8px;
+            width: 16px;
+        }
+        
+        .suite-pricing {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .pricing-info {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        
+        .price-item {
+            text-align: center;
+        }
+        
+        .price-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 5px;
+        }
+        
+        .price-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff9800;
+        }
+        
+        .select-suite-btn {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .select-suite-btn:hover {
+            background: linear-gradient(135deg, #f57c00, #e65100);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 124, 0, 0.4);
+        }
+        
+        .suite-description {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .no-suites {
+            text-align: center;
+            padding: 50px;
+            color: #6c757d;
+        }
+        
+        .loading-suites {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff9800;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"></div>
+    </div>
+    <!-- Preloader Ends -->
+
+    <!-- header start -->
+    <header class="main_header_area headerstyle-2">
+        <div class="header-content">
+            <div class="container">
+                <div class="links links-left">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> QueensHotel.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 0115254812</a></li>
+                    </ul>
+                </div>
+                <div class="links links-right pull-right">
+                    <ul>
+                        <li>
+                            <ul class="social-links">
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation Bar -->
+        <div class="header_menu affix-top">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-black-1.png" class="logo-black">
+                        </a>
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-white-1.png" class="logo-white">
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav" id="responsive-menu">
+                            <li class="dropdown submenu">
+                                <a href="index.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Home</a>
+                            </li>
+                            <li class="submenu dropdown active">
+                                <a href="availability.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Suites</a>
+                            </li>
+                            <li class="submenu dropdown">
+                                <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Restaurant</a>
+                            </li>
+                            <li class="submenu dropdown">
+                                <a href="aboutus1.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">About US</a>
+                            </li>
+                            <li class="submenu dropdown">
+                                <a href="contact.html" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contact US</a>
+                            </li>
+                        </ul>
+                        <div class="nav-btn">
+                            <a href="availability.html" class="btn btn-orange">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="slicknav-mobile"></div>
+            </nav>
+        </div>
+        <!-- Navigation Bar Ends -->
+    </header>
+    <!-- header Ends -->
+
+    <!-- breadcrumb Starts -->
+    <section class="breadcrumb-main pb-20 pt-14" style="background-image: url(images/bg/bg1.jpg);">
+        <div class="section-shape section-shape1 top-inherit bottom-0" style="background-image: url(images/shape8.png);"></div>
+        <div class="breadcrumb-outer">
+            <div class="container">
+                <div class="breadcrumb-content text-center">
+                    <h1 class="mb-3">Select Your Suite</h1>
+                    <nav aria-label="breadcrumb" class="d-block">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Suite Selection</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="dot-overlay"></div>
+    </section>
+    <!-- breadcrumb Ends -->
+
+    <!-- reservation main starts -->
+    <div class="banner-form form-style-1 form-style-4">
+        <div class="container">
+            <div class="reservation-links text-center">
+                <h2 class="mar-bottom-60 text-capitalize">Make Your Suite Reservation</h2>
+                <div class="reservation-links-content">
+                    <div class="res-item">
+                        <a href="availability.html">1</a>
+                        <p>Check Availability</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="suite-select.html" class="active"><i class="fa fa-check"></i></a>
+                        <p>Select Suite</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="booking.html">3</a>
+                        <p>Booking</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="confirmation.html">4</a>
+                        <p>Confirmation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- reservation main ends -->
+
+    <!-- Suite Selection Section -->
+    <section class="pt-6 pb-6">
+        <div class="container">
+            <div class="section-title mb-6 w-75 mx-auto text-center">
+                <h4 class="theme d-inline-block mb-2">Premium Suites</h4>
+                <h2 class="border-primary">Choose Your Perfect Suite</h2>
+                <p>Experience luxury and comfort in our premium suites designed for extended stays with world-class amenities.</p>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading-suites" class="loading-suites">
+                <div class="spinner"></div>
+                <h4>Loading Available Suites...</h4>
+                <p>Please wait while we fetch the best suites for your stay.</p>
+            </div>
+
+            <!-- Suite Cards Container -->
+            <div id="suites-container" class="row" style="display: none;">
+                <!-- Suite cards will be dynamically loaded here -->
+            </div>
+
+            <!-- No Suites Available -->
+            <div id="no-suites" class="no-suites" style="display: none;">
+                <i class="fas fa-building fa-3x mb-3" style="color: #ccc;"></i>
+                <h4>No Suites Available</h4>
+                <p>Sorry, no suites are available for your selected dates. Please try different dates or contact us for assistance.</p>
+                <a href="availability.html" class="btn btn-primary">Change Dates</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer starts -->
+    <footer class="pt-20 pb-4" style="background-image: url(images/shape8.png);">
+        <div class="section-shape top-0" style="background-image: url(images/shape8.png);"></div>
+        <div class="container">
+            <div class="footer-upper pb-4">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4 pe-4">
+                        <div class="footer-about">
+                            <img src="images/logo-white.png" alt="">
+                            <p class="mt-3 mb-3 white">
+                                Experience luxury and comfort at Queens Hotel. Our premium suites offer the perfect blend of elegance and modern amenities for your extended stay.
+                            </p>
+                            <ul>
+                                <li class="white"><strong>PO Box:</strong> +47-252-254-2542</li>
+                                <li class="white"><strong>Location:</strong> Collins Street, Melbourne</li>
+                                <li class="white"><strong>Email:</strong> info@queenshotel.com</li>
+                                <li class="white"><strong>Website:</strong> www.queenshotel.com</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6 col-sm-12 mb-4">
+                        <div class="footer-links">
+                            <h3 class="white">Quick Links</h3>
+                            <ul>
+                                <li><a href="index.html">Home</a></li>
+                                <li><a href="availability.html">Rooms & Suites</a></li>
+                                <li><a href="aboutus1.html">About Us</a></li>
+                                <li><a href="contact.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="footer-links">
+                            <h3 class="white">Suite Features</h3>
+                            <ul>
+                                <li><a href="#">Kitchen Facilities</a></li>
+                                <li><a href="#">Workspace</a></li>
+                                <li><a href="#">Premium WiFi</a></li>
+                                <li><a href="#">Concierge Service</a></li>
+                                <li><a href="#">Laundry Service</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+                        <div class="footer-links">
+                            <h3 class="white">Contact Info</h3>
+                            <div class="footer-contact">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone"></i>
+                                    <div>
+                                        <h5>Phone Number</h5>
+                                        <p>0115254812</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div>
+                                        <h5>Email Address</h5>
+                                        <p>QueensHotel.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="copyright-inner rounded p-3 d-md-flex align-items-center justify-content-between">
+                    <div class="copyright-text">
+                        <p class="m-0 white">2024 Queens Hotel. All rights reserved.</p>
+                    </div>
+                    <div class="social-links">
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer ends -->
+
+    <!-- *Scripts* -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugin.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/custom-nav.js"></script>
+    
+    <script>
+        // Suite selection functionality
+        let availableSuites = [];
+        let selectedSuite = null;
+        
+        // Suite API endpoint
+        const SUITE_API_URL = 'https://backendtestingportaljolanka.azurewebsites.net/api/Suite';
+        
+        // Function to load suites from API
+        async function loadSuites() {
+            try {
+                showLoading(true);
+                
+                const response = await fetch('https://backendtestingportaljolanka.azurewebsites.net/api/Suite');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const suites = await response.json();
+                availableSuites = suites;
+                
+                // Save suites data to localStorage for access in booking page
+                localStorage.setItem('availableSuites', JSON.stringify(suites));
+                console.log('Suites data saved to localStorage:', suites);
+                
+                showLoading(false);
+                renderSuites();
+                
+            } catch (error) {
+                console.error('Error loading suites:', error);
+                showLoading(false);
+                showError('Failed to load suites. Please try again.');
+            }
+        }
+        
+        // Display loading state
+        function showLoading(isLoading) {
+            const loadingSuitesDiv = document.getElementById('loading-suites');
+            const suitesContainerDiv = document.getElementById('suites-container');
+            const noSuitesDiv = document.getElementById('no-suites');
+
+            if (isLoading) {
+                loadingSuitesDiv.style.display = 'block';
+                suitesContainerDiv.style.display = 'none';
+                noSuitesDiv.style.display = 'none';
+            } else {
+                loadingSuitesDiv.style.display = 'none';
+                suitesContainerDiv.style.display = 'block';
+                noSuitesDiv.style.display = 'none';
+            }
+        }
+        
+        // Function to show error message
+        function showError(message) {
+            const noSuitesDiv = document.getElementById('no-suites');
+            noSuitesDiv.innerHTML = `
+                <div class="text-center">
+                    <i class="fa fa-exclamation-triangle" style="font-size: 48px; color: #dc3545; margin-bottom: 20px;"></i>
+                    <h3>Error Loading Suites</h3>
+                    <p>${message}</p>
+                    <button class="btn btn-orange" onclick="loadSuites()">Try Again</button>
+                </div>
+            `;
+            noSuitesDiv.style.display = 'block';
+        }
+        
+        // Function to render suites
+        function renderSuites() {
+            if (availableSuites && availableSuites.length > 0) {
+                displaySuites(availableSuites);
+            } else {
+                showNoSuites();
+            }
+        }
+        
+        // Function to show no suites message
+        function showNoSuites() {
+            const noSuitesDiv = document.getElementById('no-suites');
+            noSuitesDiv.innerHTML = `
+                <div class="text-center">
+                    <i class="fa fa-info-circle" style="font-size: 48px; color: #17a2b8; margin-bottom: 20px;"></i>
+                    <h3>No Suites Available</h3>
+                    <p>Sorry, no suites are currently available for the selected dates.</p>
+                    <a href="availability.html" class="btn btn-orange">Go Back</a>
+                </div>
+            `;
+            noSuitesDiv.style.display = 'block';
+        }
+        
+        // Display suites
+        function displaySuites(suites) {
+            const container = document.getElementById('suites-container');
+            container.innerHTML = '';
+            
+            suites.forEach(suite => {
+                const suiteCard = createSuiteCard(suite);
+                container.appendChild(suiteCard);
+            });
+            
+            document.getElementById('loading-suites').style.display = 'none';
+            document.getElementById('suites-container').style.display = 'block';
+            document.getElementById('no-suites').style.display = 'none';
+        }
+        
+        // Create suite card HTML
+        function createSuiteCard(suite) {
+            const col = document.createElement('div');
+            col.className = 'col-12 mb-4'; // Full width column
+            
+            col.innerHTML = `
+                <div class="suite-card" data-suite-id="${suite.id}">
+                    <div class="suite-header">
+                        <div class="suite-type">${suite.type}</div>
+                        <h3 class="suite-name">${suite.suiteName}</h3>
+                    </div>
+                    
+                    <div class="suite-details">
+                        <p class="suite-description">${suite.description}</p>
+                        
+                        <div class="suite-info-grid">
+                            <div class="info-item">
+                                <i class="fas fa-expand"></i>
+                                <span><strong>Size:</strong> ${suite.size}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-bed"></i>
+                                <span><strong>Bedrooms:</strong> ${suite.bedrooms}</span>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-bath"></i>
+                                <span><strong>Bathrooms:</strong> ${suite.bathrooms}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="suite-amenities">
+                            <h5><i class="fas fa-star"></i> Premium Amenities</h5>
+                            <div class="amenity-grid">
+                                <div class="amenity-item">
+                                    <i class="fas fa-wifi"></i>
+                                    <span>${suite.wifi_entertainment}</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>${suite.kitchen}</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>${suite.workspace}</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-concierge-bell"></i>
+                                    <span>${suite.housekeeping}</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <span>${suite.security}</span>
+                                </div>
+                                <div class="amenity-item">
+                                    <i class="fas fa-tshirt"></i>
+                                    <span>${suite.laundry_facilities}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="suite-pricing">
+                        <div class="pricing-info">
+                            <div class="price-item">
+                                <div class="price-label">Weekly Rate</div>
+                                <div class="price-value">${formatPrice(suite.weeklyRate)}</div>
+                            </div>
+                            <div class="price-item">
+                                <div class="price-label">Monthly Rate</div>
+                                <div class="price-value">${formatPrice(suite.monthlyRate)}</div>
+                            </div>
+                        </div>
+                        <button class="select-suite-btn" onclick="selectSuite(${suite.id})">
+                            <i class="fas fa-check"></i> Select This Suite
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            return col;
+        }
+        
+        // Function to select a suite
+        function selectSuite(suiteId) {
+            try {
+                // Get existing booking data from localStorage
+                const existingData = localStorage.getItem('suiteBookingData');
+                let bookingData = {};
+                
+                if (existingData) {
+                    bookingData = JSON.parse(existingData);
+                }
+                
+                // Add selected suite information
+                bookingData.selectedSuite = {
+                    id: suiteId,
+                    timestamp: Date.now()
+                };
+                
+                // Save updated booking data
+                localStorage.setItem('suiteBookingData', JSON.stringify(bookingData));
+                console.log('Suite selected and saved:', bookingData);
+                
+                // Show success message
+                showMessage('Suite selected successfully! Redirecting to booking page...', 'success');
+                
+                // Redirect to booking page after a short delay
+                setTimeout(() => {
+                    // Create URL parameters for booking page
+                    const params = new URLSearchParams({
+                        checkIn: bookingData.checkIn || '',
+                        checkOut: bookingData.checkOut || '',
+                        adults: bookingData.adults || '',
+                        children: bookingData.children || '',
+                        promocode: bookingData.promocode || '',
+                        bookingType: 'suite',
+                        suiteId: suiteId
+                    });
+                    
+                    window.location.href = `booking.html?${params.toString()}`;
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error selecting suite:', error);
+                showMessage('Error selecting suite. Please try again.', 'error');
+            }
+        }
+        
+        // Display booking information from URL parameters
+        function displayBookingInfo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkIn = urlParams.get('checkIn');
+            const checkOut = urlParams.get('checkOut');
+            const adults = urlParams.get('adults');
+            const children = urlParams.get('children');
+            
+            if (checkIn && checkOut) {
+                console.log('Booking Info:', {
+                    checkIn,
+                    checkOut,
+                    adults,
+                    children,
+                    bookingType: 'suite'
+                });
+            }
+        }
+        
+        // Calculate duration for pricing display
+        function calculateDuration(checkIn, checkOut) {
+            if (!checkIn || !checkOut) return { days: 0, weeks: 0, months: 0 };
+            
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diffTime = Math.abs(end - start);
+            const days = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const weeks = Math.floor(days / 7);
+            const months = Math.floor(days / 30);
+            
+            return { days, weeks, months };
+        }
+        
+        // Format price with LKR
+        function formatPrice(price) {
+            return `LKR ${parseFloat(price).toLocaleString()}`;
+        }
+        
+        // Function to show messages
+        function showMessage(message, type = 'info') {
+            // Remove existing messages
+            const existingMessages = document.querySelectorAll('.message');
+            existingMessages.forEach(msg => msg.remove());
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${type}`;
+            messageDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 500;
+                z-index: 1000;
+                max-width: 300px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: slideIn 0.3s ease-out;
+            `;
+
+            // Set background color based on message type
+            if (type === 'success') {
+                messageDiv.style.backgroundColor = '#28a745';
+            } else if (type === 'error') {
+                messageDiv.style.backgroundColor = '#dc3545';
+            } else {
+                messageDiv.style.backgroundColor = '#17a2b8';
+            }
+
+            messageDiv.textContent = message;
+
+            // Add slide-in animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            document.body.appendChild(messageDiv);
+
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (messageDiv.parentNode) {
+                    messageDiv.remove();
+                }
+            }, 5000);
+        }
+        
+        // Make functions available globally for debugging
+        window.selectSuite = selectSuite;
+        window.loadSuites = loadSuites;
+        window.displaySuites = displaySuites;
+        window.loadCachedBookingData = loadCachedBookingData;
+        
+        // Global function to check data persistence
+        window.checkSuiteDataPersistence = function() {
+            console.log('=== SUITE DATA PERSISTENCE CHECK ===');
+            console.log('Current page:', window.location.href);
+            console.log('Timestamp:', new Date().toISOString());
+            
+            const allKeys = Object.keys(localStorage);
+            console.log('All localStorage keys:', allKeys);
+            
+            const relevantKeys = [
+                'suiteBookingData',
+                'hotelBookingData',
+                'availableSuites',
+                'dataCacheManager_cache'
+            ];
+            
+            relevantKeys.forEach(key => {
+                const value = localStorage.getItem(key);
+                if (value) {
+                    try {
+                        const parsed = JSON.parse(value);
+                        console.log(`${key}:`, parsed);
+                    } catch (e) {
+                        console.log(`${key}:`, value);
+                    }
+                } else {
+                    console.log(`${key}: NOT FOUND`);
+                }
+            });
+            
+            // Check URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log('URL Parameters:', Object.fromEntries(urlParams.entries()));
+            
+            console.log('=== END SUITE DATA PERSISTENCE CHECK ===');
+        };
+        
+        // Function to test data persistence
+        window.testDataPersistence = function() {
+            console.log('Testing data persistence...');
+            
+            // Check current data
+            checkSuiteDataPersistence();
+            
+            // Test navigation simulation
+            console.log('Simulating navigation to test data persistence...');
+            
+            // Save test data
+            const testData = {
+                checkIn: '2025-01-15',
+                checkOut: '2025-01-22',
+                adults: 2,
+                children: 1,
+                promocode: 'TEST123',
+                bookingType: 'suite',
+                days: 7,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('suiteBookingData', JSON.stringify(testData));
+            console.log('Test data saved:', testData);
+            
+            // Verify data is saved
+            const savedData = localStorage.getItem('suiteBookingData');
+            console.log('Verification - saved data:', savedData ? JSON.parse(savedData) : 'NOT FOUND');
+            
+            // Test data retrieval
+            const retrievedData = loadCachedBookingData();
+            console.log('Data retrieval test completed');
+            
+            return 'Data persistence test completed. Check console for details.';
+        };
+        
+        // Page load event handler
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Suite-select page loaded');
+            
+            // Load cached booking data
+            loadCachedBookingData();
+            
+            // Load suites from API
+            loadSuites();
+        });
+        
+        // Function to load cached booking data from localStorage
+        function loadCachedBookingData() {
+            try {
+                // Try to get data from localStorage first
+                const suiteBookingData = localStorage.getItem('suiteBookingData');
+                const urlParams = new URLSearchParams(window.location.search);
+                
+                let bookingData = {};
+                
+                if (suiteBookingData) {
+                    try {
+                        bookingData = JSON.parse(suiteBookingData);
+                        console.log('Loaded cached suite booking data:', bookingData);
+                    } catch (e) {
+                        console.warn('Error parsing cached suite booking data:', e);
+                    }
+                }
+                
+                // If no cached data, try to get from URL parameters
+                if (!bookingData.checkIn || !bookingData.checkOut) {
+                    const checkIn = urlParams.get('checkIn');
+                    const checkOut = urlParams.get('checkOut');
+                    const adults = urlParams.get('adults');
+                    const children = urlParams.get('children');
+                    const promocode = urlParams.get('promocode');
+                    const bookingType = urlParams.get('bookingType');
+                    const days = urlParams.get('days');
+                    
+                    if (checkIn && checkOut) {
+                        bookingData = {
+                            checkIn: checkIn,
+                            checkOut: checkOut,
+                            adults: adults || 0,
+                            children: children || 0,
+                            promocode: promocode || '',
+                            bookingType: bookingType || 'suite',
+                            days: days || 0,
+                            timestamp: Date.now()
+                        };
+                        
+                        // Save this data to localStorage
+                        localStorage.setItem('suiteBookingData', JSON.stringify(bookingData));
+                        console.log('Created and saved booking data from URL params:', bookingData);
+                    }
+                }
+                
+                // Display the booking information
+                if (bookingData.checkIn && bookingData.checkOut) {
+                    displayCachedBookingInfo(bookingData);
+                }
+                
+                // Log all available data sources for debugging
+                console.log('All data sources:', {
+                    localStorage: {
+                        suiteBookingData: localStorage.getItem('suiteBookingData'),
+                        hotelBookingData: localStorage.getItem('hotelBookingData'),
+                        selectedRoomDetails: localStorage.getItem('selectedRoomDetails'),
+                        dataCacheManager_cache: localStorage.getItem('dataCacheManager_cache')
+                    },
+                    urlParams: Object.fromEntries(urlParams.entries()),
+                    finalBookingData: bookingData
+                });
+                
+            } catch (error) {
+                console.error('Error loading cached booking data:', error);
+            }
+        }
+        
+        // Function to display cached booking information
+        function displayCachedBookingInfo(bookingData) {
+            try {
+                const checkIn = new Date(bookingData.checkIn);
+                const checkOut = new Date(bookingData.checkOut);
+                const duration = calculateDuration(bookingData.checkIn, bookingData.checkOut);
+                
+                // Create or update the booking info display
+                let bookingInfoDiv = document.getElementById('cached-booking-info');
+                if (!bookingInfoDiv) {
+                    bookingInfoDiv = document.createElement('div');
+                    bookingInfoDiv.id = 'cached-booking-info';
+                    bookingInfoDiv.style.cssText = `
+                        background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+                        border: 2px solid #4caf50;
+                        border-radius: 12px;
+                        padding: 20px;
+                        margin: 20px 0;
+                        text-align: center;
+                        box-shadow: 0 4px 6px rgba(76, 175, 80, 0.1);
+                    `;
+                    
+                    // Insert after the breadcrumb section
+                    const breadcrumbSection = document.querySelector('.breadcrumb-main');
+                    if (breadcrumbSection) {
+                        breadcrumbSection.parentNode.insertBefore(bookingInfoDiv, breadcrumbSection.nextSibling);
+                    }
+                }
+                
+                bookingInfoDiv.innerHTML = `
+                    <h3 style="margin: 0 0 15px 0; color: #2e7d32;">
+                        <i class="fa fa-calendar-check" aria-hidden="true"></i> Your Suite Booking Details
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 15px;">
+                        <div>
+                            <strong>Check-in:</strong><br>
+                            ${checkIn.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </div>
+                        <div>
+                            <strong>Check-out:</strong><br>
+                            ${checkOut.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                        </div>
+                        <div>
+                            <strong>Duration:</strong><br>
+                            ${duration.days} days${duration.weeks > 0 ? ` (${duration.weeks} weeks)` : ''}${duration.months > 0 ? ` (${duration.months} months)` : ''}
+                        </div>
+                        <div>
+                            <strong>Guests:</strong><br>
+                            ${parseInt(bookingData.adults || 0) + parseInt(bookingData.children || 0)} total
+                        </div>
+                    </div>
+                    ${bookingData.promocode ? `
+                        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 10px; margin-top: 10px;">
+                            <strong style="color: #856404;">🎫 Promocode Applied:</strong> ${bookingData.promocode}
+                        </div>
+                    ` : ''}
+                `;
+                
+                console.log('Displayed cached booking info:', bookingData);
+                
+            } catch (error) {
+                console.error('Error displaying cached booking info:', error);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Flow Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover { background: #0056b3; }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+        .data-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            background: #f8f9ff;
+        }
+        .step.completed {
+            border-left-color: #28a745;
+            background: #f8fff8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Booking Flow Test</h1>
+    <p>This page helps you test the complete booking flow from room selection to confirmation.</p>
+
+    <div class="test-section">
+        <h2>Step 1: Clear Previous Data</h2>
+        <p>Clear any existing booking data to start fresh.</p>
+        <button class="btn btn-danger" onclick="clearAllData()">Clear All Data</button>
+        <button class="btn btn-warning" onclick="showCurrentData()">Show Current Data</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Simulate Room Selection</h2>
+        <p>Create sample booking data as if user selected rooms.</p>
+        <button class="btn btn-success" onclick="createSampleBookingData()">Create Sample Booking</button>
+        <div id="sampleData" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 3: Test Booking Page</h2>
+        <p>Go to booking page to see if data is displayed correctly.</p>
+        <a href="booking.html" class="btn" target="_blank">Open Booking Page</a>
+        <button class="btn btn-warning" onclick="checkBookingPageData()">Check Booking Page Data</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 4: Simulate Booking Confirmation</h2>
+        <p>Simulate what happens when user clicks 'Confirm Booking'.</p>
+        <button class="btn btn-success" onclick="simulateBookingConfirmation()">Simulate Confirmation</button>
+        <div id="confirmationData" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 5: Test Confirmation Page</h2>
+        <p>Go to confirmation page to see the final invoice.</p>
+        <a href="confirmation.html" class="btn" target="_blank">Open Confirmation Page</a>
+        <button class="btn btn-warning" onclick="checkConfirmationPageData()">Check Confirmation Data</button>
+    </div>
+
+    <div class="test-section">
+        <h2>Debug Information</h2>
+        <button class="btn btn-warning" onclick="showDebugInfo()">Show Debug Info</button>
+        <div id="debugInfo" class="data-display" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Clear all booking data
+        function clearAllData() {
+            localStorage.removeItem('hotelBookingData');
+            localStorage.removeItem('suiteBookingData');
+            localStorage.removeItem('selectedRoomDetails');
+            localStorage.removeItem('customerFullName');
+            localStorage.removeItem('customerEmail');
+            localStorage.removeItem('phone');
+            localStorage.removeItem('address');
+            localStorage.removeItem('bookingTimestamp');
+
+            document.getElementById('sampleData').style.display = 'none';
+            document.getElementById('confirmationData').style.display = 'none';
+
+            alert('All booking data cleared!');
+        }
+
+        // Show current data
+        function showCurrentData() {
+            const data = {
+                hotelBookingData: localStorage.getItem('hotelBookingData'),
+                suiteBookingData: localStorage.getItem('suiteBookingData'),
+                selectedRoomDetails: localStorage.getItem('selectedRoomDetails'),
+                customerFullName: localStorage.getItem('customerFullName'),
+                customerEmail: localStorage.getItem('customerEmail'),
+                phone: localStorage.getItem('phone'),
+                address: localStorage.getItem('address'),
+                bookingTimestamp: localStorage.getItem('bookingTimestamp')
+            };
+
+            document.getElementById('sampleData').textContent = JSON.stringify(data, null, 2);
+            document.getElementById('sampleData').style.display = 'block';
+        }
+
+        // Create sample booking data
+        function createSampleBookingData() {
+            const sampleData = {
+                selectedRoomDetails: [
+                    {
+                        roomType: 'Deluxe Room',
+                        pricePerNight: 15000,
+                        quantity: 2,
+                        subtotalTotal: 90000,
+                        features: ['WiFi', 'AC', 'Mini Bar'],
+                        numberOfNights: 3
+                    },
+                    {
+                        roomType: 'Executive Suite',
+                        pricePerNight: 25000,
+                        quantity: 1,
+                        subtotalTotal: 75000,
+                        features: ['WiFi', 'AC', 'Mini Bar', 'Balcony'],
+                        numberOfNights: 3
+                    }
+                ],
+                totalAmount: 165000,
+                numberOfNights: 3,
+                totalGuests: 5,
+                checkIn: '2024-01-15',
+                checkOut: '2024-01-18',
+                bookingType: 'hotel'
+            };
+
+            // Save to localStorage
+            localStorage.setItem('hotelBookingData', JSON.stringify(sampleData));
+            localStorage.setItem('selectedRoomDetails', JSON.stringify(sampleData.selectedRoomDetails));
+            localStorage.setItem('bookingTimestamp', Date.now().toString());
+
+            // Save sample customer data
+            localStorage.setItem('customerFullName', 'John Doe');
+            localStorage.setItem('customerEmail', 'john.doe@example.com');
+            localStorage.setItem('phone', '+94 77 123 4567');
+            localStorage.setItem('address', '123 Main Street, Colombo, Sri Lanka');
+
+            document.getElementById('sampleData').textContent = JSON.stringify({
+                bookingData: sampleData,
+                customerData: {
+                    name: 'John Doe',
+                    email: 'john.doe@example.com',
+                    phone: '+94 77 123 4567',
+                    address: '123 Main Street, Colombo, Sri Lanka'
+                }
+            }, null, 2);
+            document.getElementById('sampleData').style.display = 'block';
+
+            alert('Sample booking data created successfully!');
+        }
+
+        // Check booking page data
+        function checkBookingPageData() {
+            // This would normally check the booking page, but since we can't access it directly,
+            // we'll just verify the data is in localStorage
+            const bookingData = localStorage.getItem('hotelBookingData');
+            const selectedRoomDetails = localStorage.getItem('selectedRoomDetails');
+
+            if (bookingData && selectedRoomDetails) {
+                alert('✅ Booking data is available in localStorage. The booking page should display it correctly.');
+            } else {
+                alert('❌ Booking data not found in localStorage. Please create sample data first.');
+            }
+        }
+
+        // Simulate booking confirmation
+        function simulateBookingConfirmation() {
+            // Get current data
+            const bookingData = JSON.parse(localStorage.getItem('hotelBookingData') || 'null');
+            const customerData = {
+                name: localStorage.getItem('customerFullName'),
+                email: localStorage.getItem('customerEmail'),
+                phone: localStorage.getItem('phone'),
+                address: localStorage.getItem('address')
+            };
+
+            if (!bookingData) {
+                alert('❌ No booking data found. Please create sample data first.');
+                return;
+            }
+
+            // Simulate API response with reservation ID
+            const mockApiResponse = {
+                reservationId: `API-RES-${Date.now()}`,
+                status: 'confirmed',
+                message: 'Reservation created successfully'
+            };
+
+            // Save the reservation ID as it would be done in real booking
+            localStorage.setItem('lastReservationId', mockApiResponse.reservationId);
+            localStorage.setItem('reservationTimestamp', Date.now().toString());
+
+            // Simulate what happens during confirmation
+            const confirmationData = {
+                bookingData: bookingData,
+                customerData: customerData,
+                reservationId: mockApiResponse.reservationId,
+                invoiceNumber: `INV-${mockApiResponse.reservationId}`,
+                apiResponse: mockApiResponse,
+                timestamp: new Date().toISOString(),
+                status: 'confirmed'
+            };
+
+            document.getElementById('confirmationData').textContent = JSON.stringify(confirmationData, null, 2);
+            document.getElementById('confirmationData').style.display = 'block';
+
+            alert(`✅ Booking confirmation simulated successfully!\nReservation ID: ${mockApiResponse.reservationId}\n\nCheck the confirmation page to see the invoice with the correct reservation ID.`);
+        }
+
+        // Check confirmation page data
+        function checkConfirmationPageData() {
+            const bookingData = localStorage.getItem('hotelBookingData');
+            const customerData = {
+                name: localStorage.getItem('customerFullName'),
+                email: localStorage.getItem('customerEmail'),
+                phone: localStorage.getItem('phone'),
+                address: localStorage.getItem('address')
+            };
+
+            if (bookingData) {
+                alert('✅ Confirmation data is available. The confirmation page should display the invoice correctly.');
+            } else {
+                alert('❌ No booking data found for confirmation. Please complete steps 1-4 first.');
+            }
+        }
+
+        // Show debug information
+        function showDebugInfo() {
+            const debugData = {
+                localStorage: Object.keys(localStorage).reduce((acc, key) => {
+                    acc[key] = localStorage.getItem(key);
+                    return acc;
+                }, {}),
+                url: window.location.href,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent
+            };
+
+            document.getElementById('debugInfo').textContent = JSON.stringify(debugData, null, 2);
+            document.getElementById('debugInfo').style.display = 'block';
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Booking Flow Test Page Loaded');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Booking </title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--Default CSS-->
+    <link href="css/default.css" rel="stylesheet" type="text/css">
+    <!--Custom CSS-->
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <!--Plugin CSS-->
+    <link href="css/plugin.css" rel="stylesheet" type="text/css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link href="css/booking.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"></div>
+    </div>
+    <!-- Preloader Ends -->
+
+    <!-- header start --> 
+    <!-- header start -->
+    <header class="main_header_area headerstyle-2">
+        <div class="header-content">
+            <div class="container">
+                <div class="links links-left">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> QueensHotel.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 0115254812</a></li>
+                    </ul>
+                </div>
+                <div class="links links-right pull-right">
+                    <ul>
+                        <!-- Account Dropdown for Authenticated Users -->
+                        <li class="dropdown account-dropdown" id="accountDropdown" style="display: none;">
+                            <a href="#" class="dropdown-toggle auth-btn" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user" aria-hidden="true"></i> 
+                                <span id="customerNameDisplay">Account</span>
+                            </a>
+                            <ul class="dropdown-menu" style="right: 0; left: auto; min-width: 200px;">
+                                <li><button href="#" onclick="logout()" style="padding: 8px 20px; color: #dc3545;"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</button></li>
+                            </ul>
+                        </li>
+                        <!-- Sign In/Sign Up for Non-Authenticated Users -->
+                        
+                        <li>
+                            <ul class="social-links">
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation Bar -->
+        <div class="header_menu affix-top">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-black-1.png" class="logo-black">
+                        </a>
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-white-1.png" class="logo-white">
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav" id="responsive-menu">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="availability.html">Rooms</a>
+                            </li>
+                            <li>
+                                <a href="restaurant.html">Restaurant</a>
+                            </li>
+                            <li>
+                                <a href="aboutus1.html">About US</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact US</a>
+                            </li>
+                        </ul>
+                        <div class="nav-btn">
+                            <a href="availability.html" class="btn btn-orange">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="slicknav-mobile"></div>
+            </nav>
+        </div>
+        <!-- Navigation Bar Ends -->
+    </header><!-- header Ends -->
+
+    <!-- breadcrumbs starts -->
+    <section class="breadcrumb-outer">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>Booking</h2>
+                <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Booking</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumbs Ends -->
+
+    <!-- content starts -->
+    <section class="content reservation-main">
+        <div class="container">
+            <div class="reservation-links text-center">
+                <h2 class="mar-bottom-60 text-capitalize">Make Your Reservation</h2>
+                <div class="reservation-links-content">
+                    <div class="res-item">
+                        <a href="availability.html" class="active"><i class="fa fa-check"></i></a>
+                        <p>Check Availability</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="room-select.html"  class="active"><i class="fa fa-check"></i></a>
+                        <p>Select Room</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="booking.html" class="active">3</a>
+                        <p>Booking</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="confirmation.html">4</a>
+                        <p>Confirmation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="booking">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="booking-content">
+                            <div class="booking-desc mar-top-50">
+                                <ul class="mar-bottom-15">
+                                    <li><i class="fa fa-wifi" aria-hidden="true"></i> Wifi</li>
+                                    <li><i class="fa fa-tv" aria-hidden="true"></i> Telivision</li>
+                                    <li><i class="fa fa-bath" aria-hidden="true"></i> Hot Water</li>
+                                    <li><i class="fa fa-utensil-spoon" aria-hidden="true"></i> Dinner</li>
+                                    <li><i class="fa fa-cogs" aria-hidden="true"></i> Fast Service</li>
+                                    <li><i class="fa fa-thermometer" aria-hidden="true"></i> AC</li>
+                                    <li><i class="fa fa-car" aria-hidden="true"></i> Airport Taxi</li>
+                                </ul>
+                                <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                                    beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                            </div>
+                           <!-- Updated Personal Information Form -->
+                            <div class="personal-info mar-top-50">
+                                <div class="form-title">
+                                    <span>1</span>
+                                    <h4 class="mar-bottom-30">Personal Information</h4>
+                                </div>
+                                <form id="personal-form">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="First Name" id="firstName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Last Name" id="lastName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                Date Of Birth
+                                                <input type="date" placeholder="DOB" id="dob">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Country" id="country" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="NIC" id="nic" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="email" placeholder="Email" id="email" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="tel" placeholder="Phone" id="phone" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select class="" name="gender" id="gender" required>
+                                                    <option value="" disabled selected>Select Gender</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                    <option value="Other">Other</option>
+                                                    <option value="Prefer not to say">Prefer not to say</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Passport ID" id="passportId">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group mar-0">
+                                                <textarea placeholder="Address" id="address"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Payment Information Form -->
+                            <div class="card-info mar-top-50" id="payment-section">
+                                <div class="form-title">
+                                    <span>2</span>
+                                    <h4 class="mar-bottom-30">Payment Information</h4>
+                                </div>
+                                <form id="payment-form">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <select placeholder="Card Type" id="cardType" required>
+                                                    <option value="">Select Card Type</option>
+                                                    <option value="visa">💳 Visa</option>
+                                                    <option value="mastercard">💳 Mastercard</option>
+                                                    <option value="amex">💳 American Express</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Card Number" maxlength="19" id="cardNumber" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Card Holder Name" id="cardHolderName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="CVC" maxlength="4" id="cvc" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select placeholder="Expiry Month" id="expiryMonth" required>
+                                                    <option value="">Month</option>
+                                                    <option value="01">January</option>
+                                                    <option value="02">February</option>
+                                                    <option value="03">March</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">May</option>
+                                                    <option value="06">June</option>
+                                                    <option value="07">July</option>
+                                                    <option value="08">August</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">October</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">December</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <select placeholder="Expiry Year" id="expiryYear" required>
+                                                    <option value="">Year</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                    <option value="2027">2027</option>
+                                                    <option value="2028">2028</option>
+                                                    <option value="2029">2029</option>
+                                                    <option value="2030">2030</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group radio-group">
+                                                <label style="margin-right: 20px;">
+                                                    <input type="radio" name="payment_method" value="card" id="payByCard" checked> Pay by Card
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mar-top-15">
+                                            <div class="form-group mar-bottom-10">
+                                                <label>
+                                                    <input type="checkbox" id="payLaterCheckbox"> Pay later (do not provide card now)
+                                                </label>
+                                            </div>
+                                            <div class="form-group mar-bottom-30">
+                                                <label>
+                                                    <input type="checkbox" id="termsCheckbox" required> I agree to the <a href="#">Terms and Conditions</a>
+                                                </label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="card-btn">
+                                        <button type="button" class="btn btn-orange" id="confirm-booking-btn">CONFIRM BOOKING</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="detail-sidebar">
+                            <div class="sidebar-reservation">
+                                <h3>Your reservation</h3>
+                                <div class="reservation-detail">
+                                    <div class="rd-top">
+                                        <div class="rd-box">
+                                            <label>Check in</label>
+                                            <p class="bold" id="checkin-day"></p>
+                                            <p id="checkin-date"></p>
+                                        </div>
+                                        <div class="rd-box">
+                                            <label>Check out</label>
+                                            <p class="bold" id="checkout-day"></p>
+                                            <p id="checkout-date"></p>
+                                        </div>
+                                    </div>
+                                    <div class="rd-top">
+                                        <div class="rd-box">
+                                            <p class="bold" id="total-guests"></p>
+                                            <p>Guest</p>
+                                        </div>
+                                        <div class="rd-box">
+                                            <p class="bold" id="total-nights"></p>
+                                            <p>Night</p>
+                                        </div>
+                                    </div>
+                                    <!-- Promocode display -->
+                                    <div class="rd-top" id="promocode-display" style="display: none;">
+                                        <div class="rd-box">
+                                            <label>Promocode</label>
+                                            <p class="bold" id="applied-promocode"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <table class="reservation-table table">
+                                    <tbody id="reservation-details"></tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td id="total-amount"></td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <div class="sidebar-support">
+                                <h3>Help and Support</h3>
+                                <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                                    beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                                <p><i class="fa fa-phone"></i>  0115254808</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- content Ends -->
+
+    <!-- Footer Starts -->
+    <footer class="footer-style-1">
+        <div class="newsletter">
+            <div class="container">
+                <div class="section-title title-white">
+                    <h2>Subscribe to our <span>Newsletter</span></h2>
+                    <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                        beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                </div>
+                <div class="newsletter-form">
+                    <form>
+                        <input type="email" placeholder="Enter your email">
+                        <a href="#" class="btn btn-orange">SIGN UP</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-about">
+                                <h4>Company Info</h4>
+                                <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                                    beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                            </div>
+                            <div class="footer-payment">
+                                <h4>We Accept</h4>
+                                <ul>
+                                    <li><img src="images/icons/visa.png" alt="image"></li>
+                                    <li><img src="images/icons/mastercard.png" alt="image"></li>
+                                    <li><img src="images/icons/americanexpress.png" alt="image"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="quick-links">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="aboutus1.html">About</a></li>
+                                    <li><a href="availability.html">Rooms</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="Rooms">
+                                <h4>Rooms</h4>
+                                <ul>
+                                    <li><a href="availability.html">Single Rooms</a></li>
+                                    <li><a href="availability.html">Double Rooms</a></li>
+                                    <li><a href="availability.html">Studio Rooms</a></li>
+                                    <li><a href="availability.html">Kingsize Rooms</a></li>
+                                    <li><a href="availability.html">Presidentsuite Rooms</a></li>
+                                    <li><a href="availability.html">Luxury Kings Rooms</a></li>
+                                    <li><a href="availability.html">Connecting Rooms</a></li>
+                                    <li><a href="availability.html">Murphy Rooms</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-contact">
+                                <h4>Contact info</h4>
+                                <ul>
+                                    <li>Tel: 01111111111</li>
+                                    <li>Email: queensHotel@gmail.com</li>
+                                    <li>Fax: 011525555/li>
+                                    <li>Address: colombo, sri Lnaka</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="copyright-content text-center">
+                    <ul>
+                        <li><a href="#" class="white"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Ends -->
+
+    <!-- Back to top start -->
+    <div id="back-to-top">
+        <a href="#"></a>
+    </div>
+    <!-- Back to top ends -->
+
+    <div class="modal fade" id="login" role="dialog">
+        <div class="modal-dialog">
+            <div class="login-content">
+                <div class="login-image">
+                    <img src="images/logo-black.png" alt="image">
+                </div>
+                <h3>Hello!Sign into your account</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group form-checkbox">
+                        <input type="checkbox"> Remember Me
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+                <div class="form-btn">
+                    <a href="#" class="btn btn-orange">LOGIN</a>
+                    <p>Need an Account?<a href="#"> Create your Gautama account</a></p>
+                </div>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="register" role="dialog">
+        <div class="modal-dialog">
+            <div class="login-content">
+                <div class="login-image">
+                    <img src="images/logo-black.png" alt="image">
+                </div>
+                <h3>Awesome! Create a Gautama Account</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Confirm password">
+                    </div>
+                </form>
+                <div class="form-btn">
+                    <a href="#" class="btn btn-orange">SIGN UP</a>
+                </div>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- *Scripts* -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugin.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/custom-nav.js"></script>
+    <script src="js/data-cache.js"></script>
+    <script src="js/route-guard.js"></script>
+    <script src="js/booking-data-manager.js"></script>
+    <script src="js/booking.js"></script>
+
+
+</body>
+</html>

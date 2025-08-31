@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Debug Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .btn:hover { background: #0056b3; }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #e0a800; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #c82333; }
+        .data-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+        }
+        .status-good { color: #28a745; font-weight: bold; }
+        .status-bad { color: #dc3545; font-weight: bold; }
+        .status-warning { color: #ffc107; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Invoice Debug Tool</h1>
+    <p>This tool helps diagnose why booking data is not showing in the invoice.</p>
+
+    <div class="debug-section">
+        <h3>Step 1: Check Current localStorage Data</h3>
+        <button class="btn" onclick="checkLocalStorage()">Check localStorage</button>
+        <div id="localStorageData" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>Step 2: Test Invoice Data Reading</h3>
+        <button class="btn btn-success" onclick="testDataReading()">Test Data Reading</button>
+        <div id="dataReadingResult" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>Step 3: Simulate Invoice Rendering</h3>
+        <button class="btn btn-warning" onclick="simulateInvoiceRender()">Simulate Invoice Render</button>
+        <div id="invoiceRenderResult" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>Step 4: Load Test Data</h3>
+        <button class="btn" onclick="loadTestData('single')">Load Single Room Test</button>
+        <button class="btn" onclick="loadTestData('multiple')">Load Multiple Rooms Test</button>
+        <button class="btn" onclick="loadTestData('suite')">Load Suite Test</button>
+        <button class="btn btn-danger" onclick="clearAllData()">Clear All Data</button>
+        <div id="testDataResult" class="data-display" style="display: none;"></div>
+    </div>
+
+    <div class="debug-section">
+        <h3>Step 5: Test Complete Booking Flow</h3>
+        <button class="btn btn-success" onclick="openInvoicePage()">Open Invoice Page</button>
+        <button class="btn" onclick="openBookingPage()">Open Booking Page</button>
+        <p><strong>To test the complete flow:</strong></p>
+        <ol>
+            <li>Click "Open Booking Page" to go to booking.html</li>
+            <li>Fill in booking details and personal information</li>
+            <li>Click "CONFIRM BOOKING" button</li>
+            <li>You'll be redirected to confirmation.html with the invoice</li>
+        </ol>
+    </div>
+
+    <div class="debug-section">
+        <h3>Quick Diagnosis</h3>
+        <div id="diagnosis" class="data-display">
+            Click "Check localStorage" to start diagnosis...
+        </div>
+    </div>
+
+    <script>
+        // Import the same functions from confirmation.js
+        function readBookingData() {
+            try {
+                console.log('Reading booking data from localStorage...');
+
+                let bookingData = null;
+
+                // First try hotelBookingData (most common)
+                const hotelData = localStorage.getItem('hotelBookingData');
+                if (hotelData) {
+                    try {
+                        bookingData = JSON.parse(hotelData);
+                        console.log('Found hotel booking data:', bookingData);
+                    } catch (e) {
+                        console.error('Error parsing hotel booking data:', e);
+                    }
+                }
+
+                // If no hotel data, try suite booking data
+                if (!bookingData) {
+                    const suiteData = localStorage.getItem('suiteBookingData');
+                    if (suiteData) {
+                        try {
+                            bookingData = JSON.parse(suiteData);
+                            console.log('Found suite booking data:', bookingData);
+                        } catch (e) {
+                            console.error('Error parsing suite booking data:', e);
+                        }
+                    }
+                }
+
+                // If still no data, try selectedRoomDetails for reconstruction
+                if (!bookingData) {
+                    const roomDetails = localStorage.getItem('selectedRoomDetails');
+                    if (roomDetails) {
+                        try {
+                            const rooms = JSON.parse(roomDetails);
+                            if (Array.isArray(rooms) && rooms.length > 0) {
+                                bookingData = {
+                                    selectedRoomDetails: rooms,
+                                    totalAmount: rooms.reduce((sum, room) => sum + (parseFloat(room.subtotalTotal) || 0), 0),
+                                    numberOfNights: rooms[0]?.numberOfNights || 1,
+                                    totalGuests: rooms.reduce((sum, room) => sum + (parseInt(room.quantity) || 1), 0)
+                                };
+                                console.log('Reconstructed booking data from room details:', bookingData);
+                            }
+                        } catch (e) {
+                            console.error('Error reconstructing from room details:', e);
+                        }
+                    }
+                }
+
+                if (!bookingData) {
+                    console.warn('No booking data found');
+                    return null;
+                }
+
+                return bookingData;
+
+            } catch (error) {
+                console.error('Error reading booking data:', error);
+                return null;
+            }
+        }
+
+        function checkLocalStorage() {
+            const dataDiv = document.getElementById('localStorageData');
+            const diagnosisDiv = document.getElementById('diagnosis');
+
+            const keys = [
+                'hotelBookingData',
+                'suiteBookingData',
+                'selectedRoomDetails',
+                'customerFullName',
+                'customerEmail',
+                'phone',
+                'address'
+            ];
+
+            let data = {};
+            let diagnosis = [];
+
+            keys.forEach(key => {
+                const value = localStorage.getItem(key);
+                if (value) {
+                    try {
+                        // Try to parse as JSON for data keys
+                        if (key.includes('Data') || key.includes('Details')) {
+                            data[key] = JSON.parse(value);
+                        } else {
+                            data[key] = value;
+                        }
+                        diagnosis.push(`✅ ${key}: FOUND`);
+                    } catch (e) {
+                        data[key] = `ERROR PARSING: ${value}`;
+                        diagnosis.push(`❌ ${key}: PARSE ERROR`);
+                    }
+                } else {
+                    data[key] = 'NOT FOUND';
+                    diagnosis.push(`❌ ${key}: NOT FOUND`);
+                }
+            });
+
+            dataDiv.style.display = 'block';
+            dataDiv.textContent = JSON.stringify(data, null, 2);
+
+            diagnosisDiv.innerHTML = diagnosis.join('<br>');
+
+            // Add summary
+            const hasBookingData = data.hotelBookingData !== 'NOT FOUND' || data.suiteBookingData !== 'NOT FOUND' || data.selectedRoomDetails !== 'NOT FOUND';
+            const hasCustomerData = data.customerFullName !== 'NOT FOUND';
+
+            diagnosisDiv.innerHTML += '<br><br><strong>Summary:</strong><br>';
+            diagnosisDiv.innerHTML += hasBookingData ? '✅ Booking data: FOUND<br>' : '❌ Booking data: MISSING<br>';
+            diagnosisDiv.innerHTML += hasCustomerData ? '✅ Customer data: FOUND<br>' : '❌ Customer data: MISSING<br>';
+
+            if (!hasBookingData) {
+                diagnosisDiv.innerHTML += '<br><span class="status-bad">PROBLEM: No booking data found. Invoice will show "Room details not available"</span>';
+            } else {
+                diagnosisDiv.innerHTML += '<br><span class="status-good">GOOD: Booking data found. Invoice should show room details.</span>';
+            }
+        }
+
+        function testDataReading() {
+            const resultDiv = document.getElementById('dataReadingResult');
+
+            try {
+                const bookingData = readBookingData();
+
+                if (bookingData) {
+                    resultDiv.innerHTML = `
+                        <div class="status-good">✅ Data reading successful!</div>
+                        <br>
+                        <strong>Booking Data Structure:</strong>
+                        ${JSON.stringify(bookingData, null, 2)}
+                        <br><br>
+                        <strong>Analysis:</strong><br>
+                        - selectedRoomDetails: ${bookingData.selectedRoomDetails ? '✅ FOUND (' + bookingData.selectedRoomDetails.length + ' items)' : '❌ MISSING'}<br>
+                        - roomType: ${bookingData.roomType ? '✅ FOUND (' + bookingData.roomType + ')' : '❌ MISSING'}<br>
+                        - totalAmount: ${bookingData.totalAmount ? '✅ FOUND (LKR ' + bookingData.totalAmount.toLocaleString() + ')' : '❌ MISSING'}<br>
+                        - numberOfNights: ${bookingData.numberOfNights ? '✅ FOUND (' + bookingData.numberOfNights + ')' : '❌ MISSING'}<br>
+                        - checkIn: ${bookingData.checkIn ? '✅ FOUND (' + bookingData.checkIn + ')' : '❌ MISSING'}<br>
+                        - checkOut: ${bookingData.checkOut ? '✅ FOUND (' + bookingData.checkOut + ')' : '❌ MISSING'}
+                    `;
+                } else {
+                    resultDiv.innerHTML = '<div class="status-bad">❌ No booking data found</div>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status-bad">❌ Error reading data: ${error.message}</div>`;
+            }
+
+            resultDiv.style.display = 'block';
+        }
+
+        function simulateInvoiceRender() {
+            const resultDiv = document.getElementById('invoiceRenderResult');
+
+            try {
+                const bookingData = readBookingData();
+
+                if (!bookingData) {
+                    resultDiv.innerHTML = '<div class="status-bad">❌ No booking data to render</div>';
+                    resultDiv.style.display = 'block';
+                    return;
+                }
+
+                // Simulate invoice table creation
+                let tableHTML = '<table border="1" style="border-collapse: collapse; width: 100%;"><tr><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th></tr>';
+
+                let subtotal = 0;
+
+                if (bookingData.selectedRoomDetails && Array.isArray(bookingData.selectedRoomDetails)) {
+                    bookingData.selectedRoomDetails.forEach((room, index) => {
+                        const quantity = room.quantity || 1;
+                        const rate = room.pricePerNight || 0;
+                        const nights = bookingData.numberOfNights || 1;
+                        const amount = room.subtotalTotal || (rate * nights * quantity);
+
+                        const description = room.roomType || 'Room';
+                        tableHTML += `<tr><td>${description} × ${nights} Nights</td><td>${quantity}</td><td>LKR ${rate.toLocaleString()}</td><td>LKR ${amount.toLocaleString()}</td></tr>`;
+                        subtotal += amount;
+                    });
+                } else if (bookingData.roomType) {
+                    const quantity = bookingData.numberOfRooms || 1;
+                    const rate = bookingData.pricePerNight || 0;
+                    const nights = bookingData.numberOfNights || 1;
+                    const amount = bookingData.totalAmount || (rate * nights * quantity);
+
+                    const description = bookingData.roomType;
+                    tableHTML += `<tr><td>${description} × ${nights} Nights</td><td>${quantity}</td><td>LKR ${rate.toLocaleString()}</td><td>LKR ${amount.toLocaleString()}</td></tr>`;
+                    subtotal = amount;
+                } else {
+                    tableHTML += '<tr><td colspan="4" style="text-align: center; color: #6c757d;">Room details not available</td></tr>';
+                }
+
+                tableHTML += '</table>';
+
+                const serviceCharge = subtotal * 0.10;
+                const tax = subtotal * 0.02;
+                const total = subtotal + serviceCharge + tax;
+
+                resultDiv.innerHTML = `
+                    <div class="status-good">✅ Invoice simulation successful!</div>
+                    <br>
+                    <strong>Invoice Table Preview:</strong><br>
+                    ${tableHTML}
+                    <br>
+                    <strong>Totals:</strong><br>
+                    Subtotal: LKR ${subtotal.toLocaleString()}<br>
+                    Service Charge (10%): LKR ${serviceCharge.toLocaleString()}<br>
+                    Tax (2%): LKR ${tax.toLocaleString()}<br>
+                    <strong>Total: LKR ${total.toLocaleString()}</strong>
+                `;
+
+            } catch (error) {
+                resultDiv.innerHTML = `<div class="status-bad">❌ Error simulating invoice: ${error.message}</div>`;
+            }
+
+            resultDiv.style.display = 'block';
+        }
+
+        function loadTestData(type) {
+            const resultDiv = document.getElementById('testDataResult');
+
+            // Clear existing data
+            localStorage.removeItem('hotelBookingData');
+            localStorage.removeItem('suiteBookingData');
+            localStorage.removeItem('selectedRoomDetails');
+
+            let testData;
+
+            switch(type) {
+                case 'single':
+                    testData = {
+                        roomType: 'Deluxe Room',
+                        pricePerNight: 15000,
+                        numberOfNights: 3,
+                        numberOfRooms: 1,
+                        totalAmount: 45000,
+                        checkIn: '2024-01-15',
+                        checkOut: '2024-01-18',
+                        totalGuests: 2
+                    };
+                    localStorage.setItem('hotelBookingData', JSON.stringify(testData));
+                    break;
+
+                case 'multiple':
+                    testData = {
+                        selectedRoomDetails: [
+                            {
+                                roomType: 'Deluxe Room',
+                                pricePerNight: 15000,
+                                quantity: 2,
+                                subtotalTotal: 90000,
+                                features: ['WiFi', 'AC', 'Mini Bar'],
+                                numberOfNights: 3
+                            },
+                            {
+                                roomType: 'Executive Suite',
+                                pricePerNight: 25000,
+                                quantity: 1,
+                                subtotalTotal: 75000,
+                                features: ['WiFi', 'AC', 'Mini Bar', 'Balcony'],
+                                numberOfNights: 3
+                            }
+                        ],
+                        totalAmount: 165000,
+                        numberOfNights: 3,
+                        totalGuests: 5,
+                        checkIn: '2024-01-15',
+                        checkOut: '2024-01-18'
+                    };
+                    localStorage.setItem('hotelBookingData', JSON.stringify(testData));
+                    break;
+
+                case 'suite':
+                    testData = {
+                        selectedRoomDetails: [
+                            {
+                                roomType: 'Presidential Suite',
+                                pricePerNight: 50000,
+                                quantity: 1,
+                                subtotalTotal: 150000,
+                                features: ['WiFi', 'AC', 'Mini Bar', 'Jacuzzi', 'Butler Service'],
+                                numberOfNights: 3
+                            }
+                        ],
+                        totalAmount: 150000,
+                        numberOfNights: 3,
+                        totalGuests: 4,
+                        checkIn: '2024-01-15',
+                        checkOut: '2024-01-18',
+                        bookingType: 'suite',
+                        isSuiteBooking: true
+                    };
+                    localStorage.setItem('hotelBookingData', JSON.stringify(testData));
+                    break;
+            }
+
+            // Add customer data
+            localStorage.setItem('customerFullName', 'Test Customer');
+            localStorage.setItem('customerEmail', 'test@example.com');
+            localStorage.setItem('phone', '+94 77 123 4567');
+            localStorage.setItem('address', '123 Test Street, Colombo');
+
+            resultDiv.innerHTML = `
+                <div class="status-good">✅ Test data loaded: ${type} booking</div>
+                <br>
+                <strong>Loaded Data:</strong>
+                ${JSON.stringify(testData, null, 2)}
+                <br><br>
+                <strong>Next Steps:</strong><br>
+                1. Click "Test Data Reading" to verify data is read correctly<br>
+                2. Click "Simulate Invoice Render" to see how invoice will look<br>
+                3. Click "Open Invoice Page" to see the actual invoice
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        function clearAllData() {
+            const keys = ['hotelBookingData', 'suiteBookingData', 'selectedRoomDetails', 'customerFullName', 'customerEmail', 'phone', 'address'];
+            keys.forEach(key => localStorage.removeItem(key));
+
+            document.getElementById('testDataResult').innerHTML = '<div class="status-good">✅ All data cleared</div>';
+            document.getElementById('testDataResult').style.display = 'block';
+        }
+
+        function openInvoicePage() {
+            window.open('confirmation.html', '_blank');
+        }
+
+        function openBookingPage() {
+            window.open('booking.html', '_blank');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Invoice Debug Tool Loaded');
+        });
+    </script>
+</body>
+</html>

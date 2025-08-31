@@ -1,0 +1,512 @@
+.personal-info, .card-info {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.form-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-title span {
+    background: #ff6b35;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.form-title h4 {
+    margin: 0;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    height: 80px;
+    resize: vertical;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px;
+}
+
+.col-md-6 {
+    flex: 0 0 50%;
+    padding: 10px;
+}
+
+.col-md-3 {
+    flex: 0 0 25%;
+    padding: 10px;
+}
+
+.col-md-12 {
+    flex: 0 0 100%;
+    padding: 10px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+}
+
+.btn-orange {
+    background-color: #ff6b35;
+    color: white;
+}
+
+.btn-orange:hover {
+    background-color: #e55a2e;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.card-btn {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+.mar-top-50 {
+    margin-top: 50px;
+}
+
+.mar-bottom-30 {
+    margin-bottom: 30px;
+}
+
+.mar-top-15 {
+    margin-top: 15px;
+}
+
+.mar-0 {
+    margin: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .col-md-6,
+    .col-md-3 {
+        flex: 0 0 100%;
+    }
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.links {
+    margin: 20px;
+}
+.auth-btn {
+    text-decoration: none;
+    padding: 8px 15px;
+    display: inline-block;
+}
+.signin-btn {
+    color: #007bff;
+}
+.signup-btn {
+    color: #28a745;
+}
+.social-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.social-links li {
+    margin-left: 10px;
+}
+.social-links a {
+    color: #666;
+    font-size: 18px;
+}
+.dropdown-menu {
+    z-index: 1000;
+}
+.logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+}
+.logout-btn:hover {
+    background-color: #f5f5f5;
+}
+/* Custom confirmation modal styles */
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 5px;
+    width: 300px;
+    text-align: center;
+}
+.modal-buttons {
+    margin-top: 20px;
+}
+.modal-buttons button {
+    margin: 0 10px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.confirm-btn {
+    background-color: #dc3545;
+    color: white;
+}
+.cancel-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Promocode display styling */
+#promocode-display {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+#promocode-display .rd-box {
+    text-align: center;
+}
+
+#promocode-display label {
+    color: #6c757d;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: block;
+}
+
+#applied-promocode {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 16px;
+    margin: 0;
+    padding: 5px 10px;
+    background: #d4edda;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* Enhanced reservation detail styling */
+.reservation-detail .rd-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.reservation-detail .rd-box {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    margin: 0 5px;
+}
+
+.reservation-detail .rd-box:first-child {
+    margin-left: 0;
+}
+
+.reservation-detail .rd-box:last-child {
+    margin-right: 0;
+}
+
+.reservation-detail .rd-box label {
+    color: #6c757d;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.reservation-detail .rd-box p {
+    margin: 0;
+}
+
+.reservation-detail .rd-box p.bold {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+}
+
+.reservation-detail .rd-box p:not(.bold) {
+    color: #6c757d;
+    font-size: 12px;
+}
+
+/* Payment form styling */
+.card-info {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.card-info.pay-later {
+    opacity: 0.6;
+    background: #f8f9fa;
+}
+
+.card-info .form-group {
+    position: relative;
+}
+
+.card-info .form-group input:focus,
+.card-info .form-group select:focus {
+    border-color: #ff6b35;
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    outline: none;
+}
+
+.card-info .form-group input:invalid,
+.card-info .form-group select:invalid {
+    border-color: #dc3545;
+}
+
+.card-info .form-group input:valid,
+.card-info .form-group select:valid {
+    border-color: #28a745;
+}
+
+/* Radio button styling */
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.radio-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Checkbox styling */
+.form-group input[type="checkbox"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+}
+
+/* Card number formatting */
+#cardNumber {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+/* CVV field */
+#cvc {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
+
+/* Expiry date fields */
+#expiryMonth,
+#expiryYear {
+    text-align: center;
+}
+
+/* Terms and conditions link */
+.form-group a {
+    color: #ff6b35;
+    text-decoration: none;
+}
+
+.form-group a:hover {
+    text-decoration: underline;
+}
+
+/* Loading state for confirm button */
+#confirm-booking-btn:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Success message styling */
+.booking-message {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Selected dates header styling */
+.selected-dates-header {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    border: 2px solid #2196f3;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(33, 150, 243, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.selected-dates-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2196f3, #64b5f6, #2196f3);
+}
+
+.selected-dates-header h4 {
+    margin: 0 0 15px 0;
+    color: #1976d2;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.selected-dates-header h4 i {
+    font-size: 18px;
+    color: #2196f3;
+}
+
+.selected-dates-header p {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.selected-dates-header p strong {
+    color: #1976d2;
+    font-weight: 600;
+}
+
+/* Responsive design for selected dates header */
+@media (max-width: 768px) {
+    .selected-dates-header {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    .selected-dates-header h4 {
+        font-size: 18px;
+    }
+    
+    .selected-dates-header p {
+        font-size: 14px;
+    }
+}

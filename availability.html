@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zxx">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Availability </title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--Default CSS-->
+    <link href="css/default.css" rel="stylesheet" type="text/css">
+    <!--Custom CSS-->
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <!--Plugin CSS-->
+    <link href="css/plugin.css" rel="stylesheet" type="text/css">
+    <!--Font Awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <!-- Data Cache Manager -->
+    <script src="js/data-cache.js"></script>
+    
+    <style>
+        /* Dynamic Information Section Styling */
+        #dynamic-info {
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+        
+        #dynamic-info .alert {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        #dynamic-info .alert-info {
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+            border-left: 5px solid #17a2b8;
+        }
+        
+        #dynamic-info h5 {
+            color: #17a2b8;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        #dynamic-info ul {
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        #dynamic-info li {
+            margin-bottom: 8px;
+            color: #495057;
+        }
+        
+        #dynamic-info .bg-light {
+            background: rgba(255,255,255,0.7) !important;
+            border: 1px solid #dee2e6;
+        }
+        
+        #dynamic-info h6 {
+            color: #495057;
+            font-weight: 600;
+        }
+        
+        /* Form Label Styling */
+        label[for="room-type"] {
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        label[for="room-type"] i {
+            margin-right: 8px;
+            color: #17a2b8;
+        }
+        
+        /* Room Type Dropdown Styling */
+        #room-type {
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            min-width: 200px;
+            width: 100%;
+            max-width: 250px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            background-color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+            padding-right: 38px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            display: block;
+            line-height: 1.4;
+        }
+
+        #room-type:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+            outline: none;
+        }
+
+        #room-type:hover {
+            border-color: #17a2b8;
+            background-color: #f8f9fa;
+        }
+        
+        /* Booking Type Dropdown Styling */
+        #booking-type {
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            min-width: 220px;
+            width: 100%;
+            max-width: 280px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057 !important;
+            background-color: #fff !important;
+            padding: 8px 12px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+            padding-right: 38px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            display: block;
+            line-height: 1.4;
+        }
+
+        #booking-type:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+            outline: none;
+        }
+
+        #booking-type:hover {
+            border-color: #17a2b8;
+            background-color: #f8f9fa;
+        }
+
+        /* Improve dropdown options visibility */
+        #booking-type option {
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            background-color: #fff;
+        }
+
+        /* Custom dropdown arrow for better visibility */
+        .form-group.form-icon select {
+            position: relative;
+        }
+
+        .form-group.form-icon::after {
+            content: '';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid #6c757d;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .form-group.form-icon select:focus + .form-group.form-icon::after,
+        .form-group.form-icon select:hover + .form-group.form-icon::after {
+            border-top-color: #17a2b8;
+        }
+
+        /* Ensure text is fully visible in collapsed dropdown */
+        #booking-type {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        /* Better text rendering for dropdown */
+        #booking-type {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Ensure selected option text is always visible */
+        #booking-type option[selected],
+        #booking-type option:checked {
+            color: #495057 !important;
+            background-color: #fff !important;
+        }
+
+        /* Force text visibility for the collapsed dropdown */
+        #booking-type::-webkit-listbox option[selected] {
+            color: #495057 !important;
+        }
+
+        /* Additional fallback for text visibility */
+        select#booking-type {
+            color: #495057 !important;
+        }
+
+        select#booking-type option {
+            color: #495057 !important;
+        }
+
+        /* Final override for text visibility */
+        #booking-type,
+        #booking-type option,
+        #booking-type option[selected],
+        #booking-type option:checked {
+            color: #495057 !important;
+            background-color: #fff !important;
+        }
+
+        /* Ensure placeholder text is visible but distinct */
+        #booking-type option[disabled] {
+            color: #6c757d !important;
+            font-style: italic;
+        }
+        
+        /* Enhanced dropdown options styling */
+        #booking-type::-ms-expand {
+            display: none;
+        }
+
+        #booking-type::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #booking-type::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+
+        #booking-type::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        #booking-type::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Better focus states for accessibility */
+        #booking-type:focus + label,
+        #booking-type:hover + label {
+            color: #17a2b8;
+        }
+
+        /* Improve option hover states */
+        #booking-type option:hover {
+            background-color: #f8f9fa !important;
+            color: #17a2b8 !important;
+        }
+
+        /* Increase dropdown options height for better readability */
+        #booking-type option {
+            padding: 12px 16px !important;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            color: #495057 !important;
+            background-color: #fff !important;
+            line-height: 1.4 !important;
+            min-height: 24px !important;
+            display: block !important;
+            white-space: nowrap !important;
+            border-bottom: 1px solid #f1f3f4 !important;
+        }
+
+        /* Enhanced dropdown list container styling */
+        #booking-type {
+            option {
+                height: 52px !important;
+                padding: 16px 22px !important;
+                margin: 2px 0 !important;
+            }
+        }
+
+        /* Better spacing between options */
+        #booking-type option:not(:last-child) {
+            margin-bottom: 4px !important;
+        }
+
+        /* Improve option selection appearance */
+        #booking-type option:checked {
+            background-color: #e3f2fd !important;
+            color: #1976d2 !important;
+            font-weight: 600 !important;
+        }
+
+        /* Custom dropdown list styling for webkit browsers */
+        #booking-type::-webkit-listbox {
+            background: #fff !important;
+            border: 1px solid #dee2e6 !important;
+            border-radius: 8px !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        }
+
+        /* Firefox specific styling */
+        @-moz-document url-prefix() {
+            #booking-type option {
+                padding: 16px 18px !important;
+                font-size: 16px !important;
+                font-weight: 500 !important;
+                color: #495057 !important;
+                background-color: #fff !important;
+                line-height: 1.4 !important;
+                min-height: 26px !important;
+            }
+        }
+
+        /* Internet Explorer specific styling */
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+            #booking-type option {
+                padding: 16px 18px !important;
+                font-size: 16px !important;
+                font-weight: 500 !important;
+                color: #495057 !important;
+                background-color: #fff !important;
+                line-height: 1.4 !important;
+                min-height: 26px !important;
+            }
+        }
+
+        /* Ensure dropdown options are always visible */
+        #booking-type:focus option {
+            background-color: #fff !important;
+            color: #495057 !important;
+        }
+
+        /* Improve contrast for better readability */
+        #booking-type option {
+            text-shadow: none !important;
+            -webkit-text-stroke: 0px !important;
+        }
+
+        /* Add subtle animation for better UX */
+        #booking-type option {
+            transition: background-color 0.2s ease, color 0.2s ease !important;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            #dynamic-info .row {
+                flex-direction: column;
+            }
+
+            #dynamic-info .col-md-6 {
+                margin-bottom: 20px;
+            }
+
+            #booking-type, #room-type, #adults, #children {
+                min-width: 100%;
+                max-width: 100%;
+                font-size: 16px; /* Prevent zoom on iOS */
+                padding: 10px 14px;
+                padding-right: 40px;
+                color: #495057 !important;
+                background-color: #fff !important;
+            }
+
+            .form-group.form-icon::after {
+                right: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-content {
+                padding: 25px 15px;
+            }
+
+            #booking-type, #room-type, #adults, #children {
+                padding: 10px 12px;
+                padding-right: 38px;
+                font-size: 16px;
+                min-width: 100%;
+                max-width: 100%;
+                color: #495057 !important;
+                background-color: #fff !important;
+            }
+
+            .table-item label {
+                font-size: 14px;
+                margin-bottom: 8px;
+            }
+        }
+        
+        /* Check Availability Button Styling */
+        .form-btn {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .btn-orange {
+            background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+            border: none;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-orange:hover {
+            background: linear-gradient(135deg, #e55a00 0%, #e57300 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+            color: white;
+        }
+        
+        .btn-orange:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(255, 107, 0, 0.3);
+        }
+        
+        .btn-orange:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+        }
+        
+        /* Form Content Styling */
+        .form-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        /* Table Item Styling */
+        .table-item {
+            margin-bottom: 25px;
+        }
+        
+        .table-item label {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* Adults and Children Dropdown Styling */
+        #adults, #children {
+            border-radius: 8px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+            min-width: 120px;
+            width: 100%;
+            max-width: 140px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            background-color: #fff;
+            padding: 8px 12px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 14px;
+            padding-right: 38px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            display: block;
+            line-height: 1.4;
+        }
+
+        #adults:focus, #children:focus {
+            border-color: #17a2b8;
+            box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+            outline: none;
+        }
+
+        #adults:hover, #children:hover {
+            border-color: #17a2b8;
+            background-color: #f8f9fa;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 0;
+        }
+
+        .form-control, .form-group select {
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-group select:focus {
+            border-color: #ff6b00;
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 0, 0.25);
+        }
+        
+        /* Banner Form Styling */
+        .banner-form {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 100%);
+            padding: 60px 0;
+            position: relative;
+        }
+        
+        .banner-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('images/bg/bg1.jpg') center center/cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Section Title Styling */
+        .section-title {
+            margin-bottom: 40px;
+        }
+        
+        .section-title h4.yellow {
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-title h2.white {
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .section-title h2.white span {
+            color: #ffd700;
+        }
+        
+        /* Reservation Links Styling */
+        .reservation-links {
+            margin-bottom: 50px;
+        }
+        
+        .reservation-links h2 {
+            color: white;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        .reservation-links-content {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .res-item {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .res-item a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .res-item a.active,
+        .res-item a:hover {
+            background: #ff6b00;
+            transform: scale(1.1);
+        }
+        
+        .res-item p {
+            color: white;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Responsive Form Layout */
+        @media (max-width: 768px) {
+            .form-content {
+                padding: 20px;
+            }
+            
+            .reservation-links-content {
+                gap: 15px;
+            }
+            
+            .res-item {
+                min-width: 100px;
+            }
+            
+            .section-title h2.white {
+                font-size: 28px;
+            }
+            
+            .btn-orange {
+                padding: 12px 30px !important;
+                font-size: 16px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="status"></div>
+    </div>
+    <!-- Preloader Ends -->
+
+    <header class="main_header_area headerstyle-2">
+        <div class="header-content">
+            <div class="container">
+                <div class="links links-left">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> QueensHotel.com</a></li>
+                        <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i> 0115254812</a></li>
+                    </ul>
+                </div>
+                <div class="links links-right pull-right">
+                    <ul>
+                        <li>
+                            <ul class="social-links">
+                                <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation Bar -->
+        <div class="header_menu affix-top">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-black-1.png" class="logo-black">
+                        </a>
+                        <a class="navbar-brand" href="index.html">
+                            <img alt="logo1" src="images/logo-white-1.png" class="logo-white">
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav" id="responsive-menu">
+                            <li class="active">
+                                <a href="index.html">Home</a>
+                            </li>
+                            <li>
+                                <a href="availability.html">Rooms</a>
+                            </li>
+                            <li>
+                                <a href="aboutus1.html">About US</a>
+                            </li>
+                            <li>
+                                <a href="contact.html">Contact US</a>
+                            </li>
+                        </ul>
+                        <div class="nav-btn">
+                            <a href="availability.html" class="btn btn-orange">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div id="slicknav-mobile"></div>
+            </nav>
+        </div>
+        <!-- Navigation Bar Ends -->
+    </header>
+
+    <!-- breadcrumbs starts -->
+    <section class="breadcrumb-outer">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>Reservation</h2>
+                <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Check Availability</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumbs Ends -->
+
+    <!-- reservation main starts -->
+    <div class="banner-form form-style-1 form-style-4">
+        <div class="container">
+            <div class="reservation-links text-center">
+                <h2 class="mar-bottom-60 text-capitalize">Make Your Reservation</h2>
+                <div class="reservation-links-content">
+                    <div class="res-item">
+                        <a href="availability.html" class="active"><i class="fa fa-check"></i></a>
+                        <p>Check Availability</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="room-select.html" >2</a>
+                        <p>Select Room</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="booking.html">3</a>
+                        <p>Booking</p>
+                    </div>
+                    <div class="res-item">
+                        <a href="confirmation.html">4</a>
+                        <p>Confirmation</p>
+                    </div>
+                </div>
+            </div>
+            <div class="section-title">
+                <h4 class="yellow">Search Your Best</h4>
+                <h2 class="white"><span>Find Best Hotel</span> For Spending Your Vacation</h2>
+            </div>
+            <div class="form-content text-center">
+                <div class="table-item">
+                    <label for="booking-type">
+                        <i class="fa fa-building" aria-hidden="true"></i> Booking Type
+                    </label>
+                    <div class="form-group form-icon">
+                        <select id="booking-type" name="booking-type" style="color: #495057 !important; background-color: #fff !important;">
+                            <option value="" disabled selected style="color: #6c757d !important;">Choose booking type...</option>
+                            <option value="normal" style="color: #495057 !important;">🏨 Normal Booking</option>
+                            <option value="suite" style="color: #495057 !important;">🏢 Suite Booking</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-item">
+                    <label>Check In</label>
+                    <div class="form-group">
+                        <div class="date-range-inner-wrapper">
+                            <input id="date-range2" class="form-control"  placeholder="2025.08.28">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-item">
+                    <label>Check Out</label>
+                    <div class="form-group">
+                        <div class="date-range-inner-wrapper">
+                            <input id="date-range3" class="form-control" placeholder="2025.08.28">
+                            <span class="input-group-addon">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-item">
+                    <label for="room-type">
+                        <i class="fa fa-bed" aria-hidden="true"></i> Room Type
+                    </label>
+                    <div class="form-group form-icon">
+                        <select id="room-type" name="room-type">
+                            <option value="" disabled selected>Select room type...</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-item">
+                    <label>Promo code</label>
+                    <div class="form-group">
+                        <div class="date-range-inner-wrapper">
+                            <input id="promocode" class="form-control" >
+                        </div>
+                    </div>
+                </div>
+                <div class="table-item">
+                    <label for="adults">
+                        <i class="fa fa-user" aria-hidden="true"></i> Adults
+                    </label>
+                    <div class="form-group form-icon">
+                        <select id="adults" name="adults">
+                            <option value="" disabled selected>Select adults...</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-item">
+                    <label for="children">
+                        <i class="fa fa-child" aria-hidden="true"></i> Children
+                    </label>
+                    <div class="form-group form-icon">
+                        <select id="children" name="children">
+                            <option value="" disabled selected>Select children...</option>
+                            <option value="0">00</option>
+                            <option value="1">01</option>
+                            <option value="2">02</option>
+                            <option value="3">03</option>
+                            <option value="4">04</option>
+                            <option value="5">05</option>
+                            <option value="6">Other</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-btn text-center mar-top-20">
+                <button type="button" class="btn btn-orange btn-lg" onclick="checkAvailability()" style="padding: 15px 40px; font-size: 18px; font-weight: 600; border-radius: 8px; box-shadow: 0 4px 15px rgba(255, 107, 0, 0.3);">
+                    <i class="fa fa-search" aria-hidden="true"></i> Check Availability
+                </button>
+            </div>
+
+                <!-- Dynamic Information Section -->
+                <div id="dynamic-info" class="mt-4" style="display: none;">
+                    <div class="alert alert-info" role="alert">
+                        <h5><i class="fa fa-info-circle"></i> <span id="info-title">Booking Information</span></h5>
+                        <div id="info-content">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!-- reservation main Ends -->
+
+    <!-- Footer Starts -->
+    <footer class="footer-style-1">
+        <div class="newsletter">
+            <div class="container">
+                <div class="section-title title-white">
+                    <h2>Subscribe to our <span>Newsletter</span></h2>
+                    <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                        beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                </div>
+                <div class="newsletter-form">
+                    <form>
+                        <input type="email" placeholder="Enter your email">
+                        <a href="#" class="btn btn-orange">SIGN UP</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-about">
+                                <h4>Company Info</h4>
+                                <p>At Queens Hotel, enjoy top-notch amenities including a modern gym, relaxing
+                                    beach views, and a soothing massage parlour—all designed for your perfect getaway.</p>
+                            </div>
+                            <div class="footer-payment">
+                                <h4>We Accept</h4>
+                                <ul>
+                                    <li><img src="images/icons/visa.png" alt="image"></li>
+                                    <li><img src="images/icons/mastercard.png" alt="image"></li>
+                                    <li><img src="images/icons/americanexpress.png" alt="image"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="quick-links">
+                                <h4>Quick Links</h4>
+                                <ul>
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="aboutus1.html">About</a></li>
+                                    <li><a href="availability.html">Rooms</a></li>
+                                    <li><a href="contact.html">Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="Rooms">
+                                <h4>Rooms</h4>
+                                <ul>
+                                    <li><a href="availability.html">Single Rooms</a></li>
+                                    <li><a href="availability.html">Double Rooms</a></li>
+                                    <li><a href="availability.html">Studio Rooms</a></li>
+                                    <li><a href="availability.html">Kingsize Rooms</a></li>
+                                    <li><a href="availability.html">Presidentsuite Rooms</a></li>
+                                    <li><a href="availability.html">Luxury Kings Rooms</a></li>
+                                    <li><a href="availability.html">Connecting Rooms</a></li>
+                                    <li><a href="availability.html">Murphy Rooms</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                            <div class="footer-contact">
+                                <h4>Contact info</h4>
+                                <ul>
+                                    <li>Tel: 977-222-444-6666</li>
+                                    <li>Email: queensHotel@gmail.com</li>
+                                    <li>Fax: 977-222-444-666</li>
+                                    <li>Address: colombo, sri Lnaka</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                <div class="copyright-content text-center">
+                    <ul>
+                        <li><a href="#" class="white"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                        <li><a href="#" class="white"><i class="fab fa-google-plus" aria-hidden="true"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer><!-- Footer Ends -->
+
+    <!-- Back to top start -->
+    <div id="back-to-top">
+        <a href="#"></a>
+    </div>
+    <!-- Back to top ends -->
+
+    <div class="modal fade" id="login" role="dialog">
+        <div class="modal-dialog">
+            <div class="login-content">
+                <div class="login-image">
+                    <img src="images/logo-black.png" alt="image">
+                </div>
+                <h3>Hello!Sign into your account</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Enter password">
+                    </div>
+                    <div class="form-group form-checkbox">
+                        <input type="checkbox"> Remember Me
+                        <a href="#">Forgot password?</a>
+                    </div>
+                </form>
+                <div class="form-btn">
+                    <a href="#" class="btn btn-orange">LOGIN</a>
+                    <p>Need an Account?<a href="#"> Create your Gautam account</a></p>
+                </div>
+                <ul class="social-links">
+                    <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fab fa-linkedin" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="register" role="dialog"></div>
+
+    <!-- *Scripts* -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugin.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/custom-nav.js"></script>
+    <script src="js/custom-date.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/custom-swiper2.js"></script>
+    <script src="js/custom-singledate.js"></script>
+    <script src="js/dynamic-room-loading.js"></script>
+
+    <script>
+        // Enhanced dropdown functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const bookingTypeSelect = document.getElementById('booking-type');
+
+            if (bookingTypeSelect) {
+                // Add change event listener for better UX
+                bookingTypeSelect.addEventListener('change', function() {
+                    console.log('Booking type selected:', this.value);
+
+                    // Add visual feedback
+                    this.style.borderColor = '#28a745';
+                    this.style.boxShadow = '0 0 0 0.2rem rgba(40, 167, 69, 0.25)';
+
+                    // Reset after 2 seconds
+                    setTimeout(() => {
+                        this.style.borderColor = '#dee2e6';
+                        this.style.boxShadow = 'none';
+                    }, 2000);
+                });
+
+                // Improve mobile experience
+                if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                    bookingTypeSelect.style.fontSize = '16px'; // Prevent zoom on iOS
+                    bookingTypeSelect.style.WebkitAppearance = 'none';
+                    bookingTypeSelect.style.MozAppearance = 'none';
+                }
+
+                // Add focus/blur handlers for better accessibility
+                bookingTypeSelect.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+
+                bookingTypeSelect.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            }
+
+            // Add CSS for focused state
+            const style = document.createElement('style');
+            style.textContent = `
+                .form-group.form-icon.focused::after {
+                    border-top-color: #17a2b8;
+                }
+                .form-group.form-icon.focused select {
+                    border-color: #17a2b8;
+                    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // Function to reset dropdown if needed
+        function resetBookingTypeDropdown() {
+            const select = document.getElementById('booking-type');
+            if (select) {
+                select.selectedIndex = 0;
+                select.style.borderColor = '#dee2e6';
+                select.style.boxShadow = 'none';
+            }
+        }
+
+        // Make functions globally available
+        window.resetBookingTypeDropdown = resetBookingTypeDropdown;
+    </script>
+
+
+</body>
+</html>

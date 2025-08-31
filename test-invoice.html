@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice System Test</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-warning { background: #ffc107; color: black; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-info { background: #17a2b8; color: white; }
+        .console-output {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Invoice System Test</h1>
+        <p>This page helps you test the invoice system functionality.</p>
+
+        <h3>Test Scenarios</h3>
+        <div>
+            <button class="test-button btn-primary" onclick="loadTestScenario('singleRoom')">Single Room Booking</button>
+            <button class="test-button btn-success" onclick="loadTestScenario('multipleRooms')">Multiple Rooms Booking</button>
+            <button class="test-button btn-warning" onclick="loadTestScenario('suiteBooking')">Suite Booking</button>
+            <button class="test-button btn-danger" onclick="clearTestData()">Clear All Data</button>
+        </div>
+
+        <h3>Actions</h3>
+        <div>
+            <button class="test-button btn-info" onclick="showTestData()">Show Current Data</button>
+            <button class="test-button btn-primary" onclick="listTestScenarios()">List Scenarios</button>
+            <button class="test-button btn-success" onclick="openInvoicePage()">Open Invoice Page</button>
+        </div>
+
+        <h3>Console Output</h3>
+        <div class="console-output" id="consoleOutput">Test output will appear here...</div>
+
+        <div style="margin-top: 30px;">
+            <h3>How to Test:</h3>
+            <ol>
+                <li>Click on a test scenario button to load sample data</li>
+                <li>Click "Show Current Data" to see what's in localStorage</li>
+                <li>Click "Open Invoice Page" to view the generated invoice</li>
+                <li>On the invoice page, click "Download Invoice" to test PDF generation</li>
+            </ol>
+
+            <h4>Available Console Commands:</h4>
+            <ul>
+                <li><code>loadTestScenario('scenarioName')</code> - Load test data</li>
+                <li><code>clearTestData()</code> - Clear all booking data</li>
+                <li><code>showTestData()</code> - Show current localStorage data</li>
+                <li><code>listTestScenarios()</code> - List available scenarios</li>
+                <li><code>debugInvoice()</code> - Debug invoice data (on invoice page)</li>
+                <li><code>refreshInvoice()</code> - Refresh invoice (on invoice page)</li>
+                <li><code>downloadInvoicePDF()</code> - Download PDF (on invoice page)</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="js/test-data-generator.js"></script>
+    <script>
+        // Override console.log to display in our output area
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+
+        const consoleOutput = document.getElementById('consoleOutput');
+
+        function addToOutput(message, type = 'log') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '[ERROR]' : type === 'warn' ? '[WARN]' : '[LOG]';
+            consoleOutput.textContent += `\n${timestamp} ${prefix} ${message}`;
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToOutput(args.join(' '), 'log');
+        };
+
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToOutput(args.join(' '), 'error');
+        };
+
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToOutput(args.join(' '), 'warn');
+        };
+
+        // Clear output initially
+        consoleOutput.textContent = 'Test output will appear here...\n';
+
+        // Test functions
+        function openInvoicePage() {
+            window.open('confirmation.html', '_blank');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Invoice Test Page Loaded');
+            console.log('Available test scenarios: singleRoom, multipleRooms, suiteBooking');
+        });
+    </script>
+</body>
+</html>
